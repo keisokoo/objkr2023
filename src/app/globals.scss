@@ -1,0 +1,128 @@
+:root {
+  --nav-width: 320px;
+
+  --bright-color: #e2dbdb;
+  --dark-color: #222020;
+  --deep-dark-color: #1c1c1c;
+  --moisture-bright-color: #d4cfca;
+
+  --text-color-default: var(--dark-color);
+  --background-color-default: var(--bright-color);
+  --nav-color-default: var(--moisture-bright-color);
+
+  --border-fog: #414141;
+
+  --color-gray-6: #313131;
+  --color-gray-5: #4a4a4a;
+  --color-gray-4: #6b6b6b;
+  --color-gray-3: #8f8f8f;
+  --color-gray-2: #acacac;
+  --color-gray-1: #cdcdcd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color-default: var(--bright-color);
+    --background-color-default: var(--dark-color);
+    --nav-color-default: var(--deep-dark-color);
+
+    --color-gray-1: #313131;
+    --color-gray-2: #4a4a4a;
+    --color-gray-3: #6b6b6b;
+    --color-gray-4: #8f8f8f;
+    --color-gray-5: #acacac;
+    --color-gray-6: #cdcdcd;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--text-color-default);
+  background: var(--background-color-default);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+.not-found-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6em;
+  height: 100vh;
+}
+
+body {
+  .fr {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+  .contents {
+    flex: 1 0;
+    width: calc(100% - var(--nav-width));
+  }
+  .nav {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background-color: var(--nav-color-default);
+    height: 100vh;
+    padding: 24px;
+    width: var(--nav-width);
+    border-left: 1px solid var(--border-fog);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    text-align: right;
+    .home {
+      font-size: 32px;
+      font-weight: 100;
+    }
+    .group-nav {
+      padding-right: 16px;
+      border-right: 1px solid var(--border-fog);
+      transition: 0.3s;
+      &:hover {
+        border-width: 5px;
+      }
+      .group-title {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--color-gray-5);
+      }
+      .group-list {
+        font-size: 18px;
+        padding: 16px 0px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        a {
+          transition: 0.3s;
+        }
+        a.active {
+          padding-right: 4px;
+          color: var(--color-gray-4);
+        }
+      }
+    }
+  }
+}
