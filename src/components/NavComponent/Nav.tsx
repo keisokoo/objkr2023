@@ -2,9 +2,10 @@
 
 import classNames from 'classnames'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Fragment, HTMLAttributeAnchorTarget } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { Fragment, HTMLAttributeAnchorTarget, useMemo } from 'react'
 
+import styles from './nav.module.scss'
 type NAV_LIST_ITEM = {
   title: string
   list: {
@@ -19,15 +20,15 @@ const navList: NAV_LIST_ITEM[] = [
     list: [
       {
         label: 'react',
-        href: '/not-found-item',
+        href: '/ui-components/react-page',
       },
       {
         label: 'vue',
-        href: '/not-found-item',
+        href: '/ui-components/vue-page',
       },
       {
         label: 'svelte',
-        href: '/not-found-item',
+        href: '/ui-components/svelte-page',
       },
     ],
   },
@@ -36,11 +37,11 @@ const navList: NAV_LIST_ITEM[] = [
     list: [
       {
         label: 'utaku',
-        href: '/utaku',
+        href: '/chrome-extensions/utaku',
       },
       {
         label: 'youtube-controller',
-        href: '/youtube-controller',
+        href: '/chrome-extensions/youtube-controller',
       },
       {
         label: 'pip html5',
@@ -62,18 +63,57 @@ const navList: NAV_LIST_ITEM[] = [
 
 export function Nav() {
   const pathname = usePathname()
+  const router = useRouter()
+  const navGroup = useMemo(() => {
+    if (pathname && pathname !== '/') {
+      const findItem = navList.find((navGroup) =>
+        navGroup.list.some((item) => item.href === pathname)
+      )
+      if (findItem) {
+        const subListItem = findItem.list.find((item) => item.href === pathname)
+        return { ...findItem, item: subListItem }
+      } else {
+        return null
+      }
+    } else {
+      return null
+    }
+  }, [pathname])
   return (
-    <div className="nav">
-      <div className="home">
-        <Link href="/">HOME</Link>
-      </div>
+    <div className={styles.nav}>
+      {pathname === '/' ? (
+        <div className={styles.home}>
+          <Link href="/">HOME</Link>
+        </div>
+      ) : (
+        <>
+          <div className={styles.prev}>
+            <Link href="/">HOME</Link>
+            <div className={styles.divider}></div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                router.refresh()
+              }}
+            >
+              {navGroup?.title}
+            </button>
+          </div>
+          <div className={styles['sub-title']}>
+            {pathname && navGroup?.item?.label && (
+              <Link href={pathname}>{navGroup.item.label}</Link>
+            )}
+          </div>
+        </>
+      )}
       {navList.map((navItem) => {
         return (
           <Fragment key={navItem.title}>
-            <div className="group-nav">
-              <div className="group-title">{navItem.title}</div>
+            <div className={styles['group-nav']}>
+              <div className={styles['group-title']}>{navItem.title}</div>
               {navItem.list.length > 0 && (
-                <div className="group-list">
+                <div className={styles['group-list']}>
                   {navItem.list.map((childNavItem) => {
                     return (
                       <Link
@@ -81,7 +121,7 @@ export function Nav() {
                         href={childNavItem.href}
                         target={childNavItem.target}
                         className={classNames({
-                          active:
+                          [styles.active]:
                             pathname === childNavItem.href &&
                             childNavItem.href !== '/not-found-item',
                         })}

@@ -24,7 +24,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - 801:80
+      - 80:80
     depends_on:
       - next-app
     restart: always
