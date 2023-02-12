@@ -28,7 +28,8 @@ export default function RootLayout({
               <StyledComponentsRegistry>
                 <div className="fr">
                   <style jsx global>{`
-                    html {
+                    html,
+                    * {
                       font-family: ${Pretendards.style.fontFamily};
                     }
                   `}</style>

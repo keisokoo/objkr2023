@@ -86,8 +86,8 @@ export function Nav() {
           <Link href="/">HOME</Link>
         </div>
       ) : (
-        <>
-          <div className={styles.prev}>
+        <div className={styles['page-nav']}>
+          <div className={styles.crumbs}>
             <Link href="/">HOME</Link>
             <div className={styles.divider}></div>
             <button
@@ -100,12 +100,21 @@ export function Nav() {
               {navGroup?.title}
             </button>
           </div>
-          <div className={styles['sub-title']}>
+          <div>
             {pathname && navGroup?.item?.label && (
-              <Link href={pathname}>{navGroup.item.label}</Link>
+              <button
+                className={styles['sub-title']}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  router.refresh()
+                }}
+              >
+                {navGroup.item.label}
+              </button>
             )}
           </div>
-        </>
+        </div>
       )}
       {navList.map((navItem) => {
         return (
