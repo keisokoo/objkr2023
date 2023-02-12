@@ -1,7 +1,7 @@
 .nav {
   .sub-title {
     font-size: 24px;
-    font-weight: 100;
+    font-weight: 200;
     color: var(--text-color-default);
     text-transform: capitalize;
   }
@@ -42,11 +42,11 @@
     align-items: center;
     justify-content: flex-end;
     & > a {
-      font-size: 16px;
+      font-size: 14px;
     }
     button {
       cursor: pointer;
-      font-size: 16px;
+      font-size: 14px;
       color: var(--color-gray-5);
       &:hover {
         color: var(--text-color-default);
@@ -80,7 +80,7 @@
       }
       a.active {
         padding-right: 4px;
-        color: var(--color-gray-4);
+        color: var(--primary-color);
       }
     }
   }
